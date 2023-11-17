@@ -3,24 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ToDoIfy"
              x:Class="ToDoIfy.MainPage">
-    <StackLayout>
-        <ListView ItemsSource="{Binding TodoItems}" x:Name="TodoListView">
+
+    <Grid RowSpacing="5" ColumnSpacing="5" Padding="15"
+            RowDefinitions =".35*, .1*, *"
+            ColumnDefinitions=".75*,.25*">
+
+
+        <Image Source="logo.png" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Aspect="AspectFit" />
+        <Entry Placeholder="New Task" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" x:Name="NewTaskEntry" />
+        <Button Text="Add" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" Clicked="OnAddClicked" />
+
+        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  ItemsSource="{Binding TodoItems}" x:Name="TodoListView" > 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding IsDone}" />
-                            <Label Text="{Binding Title}" VerticalOptions="Center" />
-                            <Button Text="Remove" Clicked="OnRemoveClicked" CommandParameter="{Binding .}" />
-                        </StackLayout>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Remove" BackgroundColor="Crimson" Command="{Binding Source={x:Reference TodoListView}, Path=BindingContext.RemoveCommand}" CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid>
+                                <CheckBox IsChecked="{Binding IsDone}" HorizontalOptions="End" />
+                                <Label Text="{Binding Title}" VerticalOptions="Center" Padding="15"/>
+                            </Grid>
+                        </SwipeView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <StackLayout Orientation="Horizontal">
-            <Entry Placeholder="New Task" x:Name="NewTaskEntry" />
-            <Button Text="Add" Clicked="OnAddClicked" />
-        </StackLayout>
-    </StackLayout>
+    </Grid>
 </ContentPage>

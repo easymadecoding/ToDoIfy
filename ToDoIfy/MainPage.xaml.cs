@@ -22,15 +22,6 @@ public partial class MainPage : ContentPage
             NewTaskEntry.Text = string.Empty;
         }
     }
-
-    private void OnRemoveClicked(object sender, EventArgs e)
-    {
-        var button = (Button)sender;
-        if (button?.CommandParameter is TodoItem todoItem)
-        {
-            _viewModel.RemoveTodoItem(todoItem);
-        }
-    }
 }
 
 public class TodoItem

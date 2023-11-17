@@ -57,8 +57,12 @@
 
 	<ItemGroup>
 	  <None Remove="ViewModels\" />
+	  <None Remove="Resources\Images\tea.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="ViewModels\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\logo.png" />
 	</ItemGroup>
 </Project>

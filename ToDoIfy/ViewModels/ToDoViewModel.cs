@@ -37,6 +37,8 @@ namespace ToDoIfy.ViewModels
         {
             TodoItems.Remove(todoItem);
         }
+
+        public Command<TodoItem> RemoveCommand => new Command<TodoItem>(RemoveTodoItem);
     }
 }
 
