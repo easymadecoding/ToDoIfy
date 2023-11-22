@@ -20,12 +20,24 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Remove" BackgroundColor="Crimson" Command="{Binding Source={x:Reference TodoListView}, Path=BindingContext.RemoveCommand}" CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Remove" BackgroundColor="Crimson"
+                                               Command="{Binding Source={x:Reference TodoListView},
+                                               Path=BindingContext.RemoveCommand}" CommandParameter="{Binding .}" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
                             <Grid>
+                                <Frame BorderColor="Transparent" WidthRequest="320" HorizontalOptions="Start">
+
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={x:Reference TodoListView},
+                                            Path=BindingContext.TapCommand}" CommandParameter="{Binding Title}" />
+                                    </Frame.GestureRecognizers>
+                                    
+                                    <Label Text="{Binding Title}" VerticalOptions="Center" Margin="-12"/>
+                                </Frame>
+
                                 <CheckBox IsChecked="{Binding IsDone}" HorizontalOptions="End" />
-                                <Label Text="{Binding Title}" VerticalOptions="Center" Padding="15"/>
                             </Grid>
                         </SwipeView>
                     </ViewCell>

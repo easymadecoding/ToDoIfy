@@ -38,7 +38,13 @@ namespace ToDoIfy.ViewModels
             TodoItems.Remove(todoItem);
         }
 
+        public async void TapItem(string itemName)
+        {
+            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}?Text={itemName}");
+        }
+
         public Command<TodoItem> RemoveCommand => new Command<TodoItem>(RemoveTodoItem);
+        public Command<string> TapCommand => new Command<string>(TapItem);
     }
 }
 
