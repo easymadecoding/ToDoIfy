@@ -6,10 +6,10 @@ public partial class MainPage : ContentPage
 {
     private ToDoViewModel _viewModel;
 
-    public MainPage()
+    public MainPage(ToDoViewModel toDoViewModel)
 	{
 		InitializeComponent();
-        _viewModel = new ToDoViewModel();
+        _viewModel = toDoViewModel;
         BindingContext = _viewModel;
     }
 

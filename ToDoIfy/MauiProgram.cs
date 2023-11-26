@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ToDoIfy.ViewModels;
 
 namespace ToDoIfy;
 
@@ -19,7 +20,13 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
+		builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<ToDoViewModel>();
+
+        builder.Services.AddTransient<DetailsPage>();
+        builder.Services.AddTransient<DetailsViewModel>();
+
+        return builder.Build();
 	}
 }
 
