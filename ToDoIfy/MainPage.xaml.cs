@@ -1,4 +1,5 @@
-﻿using ToDoIfy.ViewModels;
+﻿using SQLite;
+using ToDoIfy.ViewModels;
 
 namespace ToDoIfy;
 
@@ -29,9 +30,16 @@ public partial class MainPage : ContentPage
     }
 }
 
+[Table("TodoItems")]
 public class TodoItem
 {
-	public string Title { get; set; }
+    [PrimaryKey, AutoIncrement, Column("ID")]
+    public int ID { get; set; }
+
+    [MaxLength(250), Unique]
+    public string Title { get; set; }
+
     public DateTime Deadline { get; set; }
+
     public bool IsDone { get; set; }
 }

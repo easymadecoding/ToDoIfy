@@ -18,24 +18,28 @@ namespace ToDoIfy.ViewModels
             }
         }
 
-        public ToDoViewModel()
+        private TodoItemDatabase _database;
+
+        public ToDoViewModel(TodoItemDatabase database)
 		{
-            TodoItems = new ObservableCollection<TodoItem>
-            {
-                new TodoItem { Title = "Task 1", IsDone = false, Deadline = DateTime.Now },
-                new TodoItem { Title = "Task 2", IsDone = true, Deadline = DateTime.Now },
-                new TodoItem { Title = "Task 3", IsDone = false, Deadline = DateTime.Now }
-            };
+            _database = database;
+
+            var result = Task.Run(_database.GetItemsAsync).ConfigureAwait(true);
+            TodoItems = new ObservableCollection<TodoItem>( result.GetAwaiter().GetResult() );
         }
 
-        public void AddTodoItem(string title, DateTime deadline)
+        public async void AddTodoItem(string title, DateTime deadline)
         {
-            TodoItems.Add(new TodoItem { Title = title, IsDone = false, Deadline = deadline });
+            var itemToBeAdded = new TodoItem { Title = title, IsDone = false, Deadline = deadline };
+
+            TodoItems.Add(itemToBeAdded);
+            await _database.SaveItemAsync(itemToBeAdded);
         }
 
-        public void RemoveTodoItem(TodoItem todoItem)
+        public async void RemoveTodoItem(TodoItem todoItem)
         {
             TodoItems.Remove(todoItem);
+            await _database.DeleteItemAsync(todoItem);
         }
 
         public async void TapItem(TodoItem todoItem)
