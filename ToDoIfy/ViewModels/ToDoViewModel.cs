@@ -22,15 +22,15 @@ namespace ToDoIfy.ViewModels
 		{
             TodoItems = new ObservableCollection<TodoItem>
             {
-                new TodoItem { Title = "Task 1", IsDone = false },
-                new TodoItem { Title = "Task 2", IsDone = true },
-                new TodoItem { Title = "Task 3", IsDone = false }
+                new TodoItem { Title = "Task 1", IsDone = false, Deadline = DateTime.Now },
+                new TodoItem { Title = "Task 2", IsDone = true, Deadline = DateTime.Now },
+                new TodoItem { Title = "Task 3", IsDone = false, Deadline = DateTime.Now }
             };
         }
 
-        public void AddTodoItem(string title)
+        public void AddTodoItem(string title, DateTime deadline)
         {
-            TodoItems.Add(new TodoItem { Title = title, IsDone = false });
+            TodoItems.Add(new TodoItem { Title = title, IsDone = false, Deadline = deadline });
         }
 
         public void RemoveTodoItem(TodoItem todoItem)
@@ -38,13 +38,13 @@ namespace ToDoIfy.ViewModels
             TodoItems.Remove(todoItem);
         }
 
-        public async void TapItem(string itemName)
+        public async void TapItem(TodoItem todoItem)
         {
-            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}?Text={itemName}");
+            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}?Text={todoItem.Title}&Deadline={todoItem.Deadline}");
         }
 
         public Command<TodoItem> RemoveCommand => new Command<TodoItem>(RemoveTodoItem);
-        public Command<string> TapCommand => new Command<string>(TapItem);
+        public Command<TodoItem> TapCommand => new Command<TodoItem>(TapItem);
     }
 }
 

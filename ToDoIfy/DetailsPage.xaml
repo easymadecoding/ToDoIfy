@@ -11,6 +11,11 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
+        <Label 
+            Text="{Binding Deadline, StringFormat=Deadline: {0}}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
         <Button Text="Back" WidthRequest="100" Margin="50" VerticalOptions="End" Command="{Binding GoBackCommand}"/>
     </StackLayout>
 </ContentPage>

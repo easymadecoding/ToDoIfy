@@ -4,16 +4,20 @@
              xmlns:local="clr-namespace:ToDoIfy"
              x:Class="ToDoIfy.MainPage">
 
-    <Grid RowSpacing="5" ColumnSpacing="5" Padding="15"
+    <Grid RowSpacing="5" ColumnSpacing="5" Padding="4"
             RowDefinitions =".35*, .1*, *"
-            ColumnDefinitions=".75*,.25*">
+            ColumnDefinitions=".40*,.15*,.25*,.20*">
 
 
-        <Image Source="logo.png" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Aspect="AspectFit" />
+        <Image Source="logo.png" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Aspect="AspectFit" />
         <Entry Placeholder="New Task" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" x:Name="NewTaskEntry" />
-        <Button Text="Add" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" Clicked="OnAddClicked" />
 
-        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  ItemsSource="{Binding TodoItems}" x:Name="TodoListView" > 
+        <TimePicker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="TimeTaskEntry" Time="4:15:26" />
+        <DatePicker Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" x:Name="DayTaskEntry" MinimumDate="01/01/2022" MaximumDate="12/31/2022" Date="06/21/2022" />
+ 
+        <Button Text="Add" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Clicked="OnAddClicked" />
+
+        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"  ItemsSource="{Binding TodoItems}" x:Name="TodoListView" > 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -31,7 +35,7 @@
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Source={x:Reference TodoListView},
-                                            Path=BindingContext.TapCommand}" CommandParameter="{Binding Title}" />
+                                            Path=BindingContext.TapCommand}" CommandParameter="{Binding .}" />
                                     </Frame.GestureRecognizers>
                                     
                                     <Label Text="{Binding Title}" VerticalOptions="Center" Margin="-12"/>

@@ -3,10 +3,14 @@
 namespace ToDoIfy.ViewModels
 {
     [QueryProperty("Text", "Text")]
-	public partial class DetailsViewModel : ObservableObject
+    [QueryProperty("Deadline", "Deadline")]
+    public partial class DetailsViewModel : ObservableObject
 	{
         [ObservableProperty]
         string text;
+
+        [ObservableProperty]
+        string deadline;
 
         async void GoBack()
         {

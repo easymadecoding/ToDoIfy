@@ -16,9 +16,14 @@ public partial class MainPage : ContentPage
     private void OnAddClicked(object sender, EventArgs e)
     {
         var newTaskTitle = NewTaskEntry.Text;
+        var newTaskTimeDeadline = TimeTaskEntry.Time;
+        var newTaskDayDeadline = DayTaskEntry.Date;
+
+        var taskDeadline = newTaskDayDeadline.Add(newTaskTimeDeadline);
+
         if (!string.IsNullOrWhiteSpace(newTaskTitle))
         {
-            _viewModel.AddTodoItem(newTaskTitle);
+            _viewModel.AddTodoItem(newTaskTitle, taskDeadline);
             NewTaskEntry.Text = string.Empty;
         }
     }
@@ -27,5 +32,6 @@ public partial class MainPage : ContentPage
 public class TodoItem
 {
 	public string Title { get; set; }
+    public DateTime Deadline { get; set; }
     public bool IsDone { get; set; }
 }
