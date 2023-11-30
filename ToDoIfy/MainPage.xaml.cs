@@ -28,6 +28,13 @@ public partial class MainPage : ContentPage
             NewTaskEntry.Text = string.Empty;
         }
     }
+
+    void CheckBox_CheckedChanged(Object sender, CheckedChangedEventArgs e)
+    {
+        var checkBox = sender as CheckBox;
+        var toDoItemSender = checkBox.BindingContext as TodoItem;
+        _viewModel.UpdateTodoItem(toDoItemSender);
+    }
 }
 
 [Table("TodoItems")]

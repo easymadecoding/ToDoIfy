@@ -41,7 +41,7 @@
                                     <Label Text="{Binding Title}" VerticalOptions="Center" Margin="-12"/>
                                 </Frame>
 
-                                <CheckBox IsChecked="{Binding IsDone}" HorizontalOptions="End" />
+                                <CheckBox IsChecked="{Binding IsDone}" CheckedChanged="CheckBox_CheckedChanged" HorizontalOptions="End" />
                             </Grid>
                         </SwipeView>
                     </ViewCell>

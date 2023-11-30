@@ -36,6 +36,11 @@ namespace ToDoIfy.ViewModels
             await _database.SaveItemAsync(itemToBeAdded);
         }
 
+        public async void UpdateTodoItem(TodoItem todoItem)
+        {
+            await _database.SaveItemAsync(todoItem);
+        }
+
         public async void RemoveTodoItem(TodoItem todoItem)
         {
             TodoItems.Remove(todoItem);
