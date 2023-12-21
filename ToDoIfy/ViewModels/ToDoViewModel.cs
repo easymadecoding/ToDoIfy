@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Plugin.LocalNotification;
+using Plugin.LocalNotification.iOSOption;
 
 namespace ToDoIfy.ViewModels
 {
@@ -19,6 +21,7 @@ namespace ToDoIfy.ViewModels
         }
 
         private TodoItemDatabase _database;
+        private const string deadlineTitle = "Task deadline at: ";
 
         public ToDoViewModel(TodoItemDatabase database)
 		{
@@ -30,10 +33,22 @@ namespace ToDoIfy.ViewModels
 
         public async void AddTodoItem(string title, DateTime deadline)
         {
+            var deadlineNotification = new NotificationRequest
+            {
+                Title = title,
+                Description = deadlineTitle + deadline.ToString(),
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = DateTime.Now.AddSeconds(1) //deadline.AddHours(-1)
+                }
+            };
+
             var itemToBeAdded = new TodoItem { Title = title, IsDone = false, Deadline = deadline };
 
             TodoItems.Add(itemToBeAdded);
             await _database.SaveItemAsync(itemToBeAdded);
+
+            await LocalNotificationCenter.Current.Show(deadlineNotification);
         }
 
         public async void UpdateTodoItem(TodoItem todoItem)
