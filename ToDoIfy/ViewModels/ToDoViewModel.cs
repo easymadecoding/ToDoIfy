@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.iOSOption;
+using ToDoIfy.Services;
 
 namespace ToDoIfy.ViewModels
 {
@@ -21,14 +22,39 @@ namespace ToDoIfy.ViewModels
         }
 
         private TodoItemDatabase _database;
+        private IQuoteService _quoteService;
         private const string deadlineTitle = "Task deadline at: ";
+        private Tuple<string, string> _quote = new Tuple<string, string>(string.Empty, string.Empty);
+        private string _quoteLabel = string.Empty;
 
-        public ToDoViewModel(TodoItemDatabase database)
+        public string QuoteLabel
+        {
+            get => _quoteLabel;
+            set
+            {
+                _quoteLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ToDoViewModel(TodoItemDatabase database, IQuoteService quoteService)
 		{
             _database = database;
+            _quoteService = quoteService;
 
             var result = Task.Run(_database.GetItemsAsync).ConfigureAwait(true);
             TodoItems = new ObservableCollection<TodoItem>( result.GetAwaiter().GetResult() );
+
+            InitializaQuote();
+
+            if (TodoItems.Count != 0)
+            {
+                QuoteLabel = string.Empty;
+            }
+            else
+            {
+                QuoteLabel = _quote.Item1 + "\n\t\t -" + _quote.Item2;
+            }
         }
 
         public async void AddTodoItem(string title, DateTime deadline)
@@ -49,6 +75,8 @@ namespace ToDoIfy.ViewModels
             await _database.SaveItemAsync(itemToBeAdded);
 
             await LocalNotificationCenter.Current.Show(deadlineNotification);
+
+            QuoteLabel = string.Empty;
         }
 
         public async void UpdateTodoItem(TodoItem todoItem)
@@ -60,6 +88,11 @@ namespace ToDoIfy.ViewModels
         {
             TodoItems.Remove(todoItem);
             await _database.DeleteItemAsync(todoItem);
+
+            if (TodoItems.Count == 0)
+            {
+                QuoteLabel = _quote.Item1 + "\n\t\t -" + _quote.Item2;
+            }
         }
 
         public async void TapItem(TodoItem todoItem)
@@ -69,6 +102,12 @@ namespace ToDoIfy.ViewModels
 
         public Command<TodoItem> RemoveCommand => new Command<TodoItem>(RemoveTodoItem);
         public Command<TodoItem> TapCommand => new Command<TodoItem>(TapItem);
+
+        private void InitializaQuote()
+        {
+            var quote = Task.Run(_quoteService.GetQuote).ConfigureAwait(true);
+            _quote = quote.GetAwaiter().GetResult();
+        }
     }
 }
 

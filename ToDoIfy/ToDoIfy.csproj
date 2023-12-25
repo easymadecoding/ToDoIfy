@@ -67,10 +67,12 @@
 	  <None Remove="ViewModels\" />
 	  <None Remove="Resources\Images\tea.png" />
 	  <None Remove="Data\" />
+	  <None Remove="Services\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Data\" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Images\logo.png" />

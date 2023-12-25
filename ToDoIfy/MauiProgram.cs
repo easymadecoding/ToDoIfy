@@ -2,6 +2,7 @@
 using Microsoft.Maui.LifecycleEvents;
 using ToDoIfy.ViewModels;
 using Plugin.LocalNotification;
+using ToDoIfy.Services;
 
 #if ANDROID
 using Android.Views;
@@ -71,6 +72,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<DetailsPage>();
         builder.Services.AddTransient<DetailsViewModel>();
+
+        builder.Services.AddSingleton<IQuoteService, QuoteService>();
 
         builder.Services.AddSingleton<TodoItemDatabase>();
 

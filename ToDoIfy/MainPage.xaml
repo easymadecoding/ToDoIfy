@@ -48,5 +48,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" VerticalOptions="End" HorizontalOptions="Center" Text="{Binding QuoteLabel}"/>
+
     </Grid>
 </ContentPage>
